@@ -1,5 +1,8 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 class Product_Data:
@@ -14,7 +17,8 @@ class Product_Data:
         self.rating = float(rate[1:-1])
 
     def fetchPrice(self):
-        self.price = float(self._data_Div.find("div", class_="price").text[1:])
+        self.price = float((self._data_Div.find(
+            "div", class_="price").text[1:]).replace(",", ""))
 
     def fetchDiscount(self):
         temp = self. _data_Div.find("div", class_="price__discount")
@@ -27,7 +31,7 @@ class Product_Data:
         paragraph = (self._data_Div.find(
             class_="Description-sc-40bbdp-0 gwjNeT").find_all("span"))
 
-        dis = ""
+        dis = self.name
         for p in paragraph:
             dis += p.text
 
@@ -35,21 +39,14 @@ class Product_Data:
 
     def fetchIngredients(self):
 
-        try:
-            coll_data = self._soup.find(
-                class_="woodmart-list").find_all("strong")
+        _ingredient = []
 
-            _ingredient = []
-            for i in coll_data:
-                _text = i.text[:i.text.find(':')]
-                _ingredient.append(_text.strip().lower())
-        except:
-            self._retry += 1
-            if self._retry <= 3:
-                self.fetchIngredients()
-            else:
-                print("Error in Fetching Ingredients")
-                return
+        coll_data = self._soup.find(
+            class_="woodmart-list").find_all("strong")
+
+        for i in coll_data:
+            _text = i.text[:i.text.find(':')]
+            _ingredient.append(_text.strip().lower())
 
         self.ingredients = _ingredient
 
@@ -58,17 +55,21 @@ class Product_Data:
         baseURL = "https://mamaearth.in"
 
         self.link = baseURL+product_link
-        self._retry = 0
+
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
+        options.add_argument('verbose')
+        options.add_argument('log-level=3')
 
         browser = webdriver.Chrome(options=options)
-        browser.implicitly_wait(3000)
 
         browser.get(self.link)
-        browser.execute_script("return document.readyState")
+        WebDriverWait(browser, 10).until(
+            EC.visibility_of_element_located((By.CLASS_NAME, "woodmart-list")))
 
         html = browser.page_source
+        browser.quit()
+
         self._soup = BeautifulSoup(html, 'lxml')
 
         self._data_Div = self._soup.find(
@@ -80,3 +81,7 @@ class Product_Data:
         self.fetchDiscount()
         self.fetchDiscription()
         self.fetchIngredients()
+
+        print("Done  "+self.name+"\n\n")
+
+#
