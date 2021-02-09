@@ -2,7 +2,7 @@ import _Fetch_Product_Data
 import pandas as pd
 import csv
 
-dt = pd.read_csv('temp.csv')
+dt = pd.read_csv('ProductLinks.csv')
 
 products = list(dt['Product Links'])
 
@@ -13,18 +13,29 @@ price = []
 discount = []
 discription = []
 ingredients = []
+pack = []
 
-
+num = 1
+error = 0
+er = []
 for item in products:
-    obj = _Fetch_Product_Data.Product_Data(item)
-    name.append(obj.name)
-    link.append(obj.link)
-    rating.append(obj.rating)
-    price.append(obj.price)
-    discount.append(obj.discount)
-    discription.append(obj.discription)
-    ingredients.append(obj.ingredients)
-    del(obj)
+    print(num)
+    try:
+        obj = _Fetch_Product_Data.Product_Data(item)
+        name.append(obj.name)
+        link.append(obj.link)
+        rating.append(obj.rating)
+        price.append(obj.price)
+        discount.append(obj.discount)
+        discription.append(obj.discription)
+        ingredients.append(obj.ingredients)
+        pack.append(obj.size)
+        del(obj)
+    except:
+        print("ERROR : "+item)
+        error += 1
+        er.append(item)
+    num += 1
 
 P_dict = {
     'Name': name,
@@ -32,6 +43,7 @@ P_dict = {
     'Rating': rating,
     'Price': price,
     'Discount': discount,
+    'Pack': pack,
     'Ingredients': ingredients,
     'Discription': discription,
 }

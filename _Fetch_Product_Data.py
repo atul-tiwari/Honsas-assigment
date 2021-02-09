@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import re
 
 
 class Product_Data:
@@ -50,6 +51,22 @@ class Product_Data:
 
         self.ingredients = _ingredient
 
+    def featchPack(self):
+        new_string = re.sub('[^A-z0-9 -]', '', self.name).lower()
+        f_string = ""
+        for i in new_string.split(" "):
+            if i.isdigit():
+                f_string += i
+            else:
+                f_string += (i + " ")
+
+        for word in f_string.split(" "):
+            if word.endswith("g") or word.endswith("ml"):
+                if word[0].isdigit():
+                    return word
+
+        return "null"
+
     def __init__(self, product_link=""):
         super().__init__()
         baseURL = "https://mamaearth.in"
@@ -81,6 +98,7 @@ class Product_Data:
         self.fetchDiscount()
         self.fetchDiscription()
         self.fetchIngredients()
+        self.size = self.featchPack()
 
         print("Done  "+self.name+"\n\n")
 
