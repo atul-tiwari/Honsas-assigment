@@ -2,8 +2,12 @@
 mamaEarth Assigment
 
 Python lib used are  :-  selenium,BeautifulSoup,sklearn,re,pandas,matplot
+### Workbook Link
 
-#how project Works
+Link :- Work Book
+[MAMAEARTH.xlsx](https://github.com/atul-tiwari/mamaEarth/files/5956793/mamaearth.xlsx)
+
+# how project Works
 
 Step 1 :- Run file '_Fetch_Data.py'  this file will fetch all the product links from the BaseUrl :- 'https://mamaearth.in/product-category/beauty' and store them into an File name 'Productlinks.csv'
 
@@ -46,3 +50,10 @@ Step 6 :- 'Get_Result.py' will take all the data and output a file name 'Result.
   - remove all numbers and punctuation marks
   - all to lowercase
   - methord used :- TF-IDF Vectorizer
+  
+
+#statistics
+
+![Figure_1](https://user-images.githubusercontent.com/24614316/107484856-04da6a00-6ba9-11eb-9982-1e7e5e18674e.png)
+![Figure_2](https://user-images.githubusercontent.com/24614316/107484860-060b9700-6ba9-11eb-95e7-2383da6006cf.png)
+![Figure_3](https://user-images.githubusercontent.com/24614316/107484863-06a42d80-6ba9-11eb-834d-8a1b8dcdc5a6.png)
