@@ -5,6 +5,8 @@ import pandas as pd
 import re
 import pickle
 
+# string cleaning removeing unwanted stuff
+
 
 def cleanString(st):
     new_string = re.sub('[^A-z0-9 -]', '', st).lower()

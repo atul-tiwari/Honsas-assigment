@@ -1,9 +1,13 @@
 import re
 
+# string cleaning removeing unwanted stuff
+
 
 def compstr(st):
     new_string = re.sub('[^A-z0-9 -]', '', st).lower()
     return new_string
+
+# just check the feached ingredients form page and pick the key ingredient
 
 
 def calculate_key_ingredients(names, ingredients):

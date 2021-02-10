@@ -11,12 +11,11 @@ soup = BeautifulSoup(html, 'lxml')
 print(type(soup))
 
 results = soup.find(class_="renderProductListData__Wrapper-sc-16np6sh-0 DtsGp")
-
-
 children = results.findChildren("div", recursive=False)
 
 product_links = []
 
+# this will featch all the products link from provided page
 for child in children:
     product_links.append(child.find(
         "div", class_="uniquewhite").find("div").find("a")['href'])

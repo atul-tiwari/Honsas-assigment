@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 import re
 
 
+# ihis class featch the data from the product page
 class Product_Data:
 
     def fetchName(self):

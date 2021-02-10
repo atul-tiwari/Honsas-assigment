@@ -18,6 +18,8 @@ pack = []
 num = 1
 error = 0
 er = []
+
+# this will create the Raw data file wich will have all data in it
 for item in products:
     print(num)
     try:
